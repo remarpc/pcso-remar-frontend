@@ -38,8 +38,8 @@ else
     </table>
 }
 
-<input @bind="name" placeholder="type name" />
-<input @bind="message" placeholder="type message" />
+<input @bind="name" placeholder="type name" required />
+<input @bind="message" placeholder="type message" required />
 <br>
 <br>
 
@@ -61,7 +61,6 @@ else
         HttpClient httpClient = new HttpClient();
         await httpClient.DeleteAsync(url);
         await GetListAsync();
-        StateHasChanged();
     }
 
 
@@ -74,7 +73,8 @@ else
         ToDoItem todoItemPost = new ToDoItem
             {
                 message = message,
-                name = name
+                name = name,
+                created = DateTime.Now
             };
         string myContent = JsonSerializer.Serialize(todoItemPost);
         byte[] buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
@@ -83,8 +83,6 @@ else
         await httpClient.PostAsync(url, byteContent);
 
         await GetListAsync();
-
-        StateHasChanged();
     }
 
     private async Task GetListAsync()
@@ -96,6 +94,7 @@ else
         todoList = JsonSerializer.Deserialize<List<ToDoItem>>(jsonData);
         name = null;
         message = null;
+        StateHasChanged();
     }
 
     private async void InvokeJavaScript()
