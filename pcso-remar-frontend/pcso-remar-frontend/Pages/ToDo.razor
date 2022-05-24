@@ -2,6 +2,7 @@
 @inject IJSRuntime JS
 @using System.Text.Json;
 @using System.Text.Json.Serialization;
+@using System.Net.Http.Headers;
 
 <h1>Welcome to ToDo Page</h1>
 <small>Here we will consume the new API</small>
@@ -37,6 +38,10 @@ else
     </table>
 }
 
+<input @bind="name" placeholder="type name"/>
+<input @bind="message" placeholder="type message" />
+<br><br>
+
 <button class="btn btn-primary" @onclick="AddToDo">Add To Do</button>
 <button class="btn btn-primary" @onclick="InvokeJavaScript">Invoke JavaScript</button>
 
@@ -44,13 +49,35 @@ else
     private int count = 0;
     private string jsonData;
     private List<ToDoItem> todoList;
+    private string url = "https://pcso-remar-backend.azurewebsites.net/todoitems";
+
+    private string name;
+    private string message;
 
     private async void AddToDo()
     {
         // Now we want to use our Web API
+        count++;
         HttpClient httpClient = new HttpClient();
-        jsonData = await httpClient.GetStringAsync("https://pcso-remar-backend.azurewebsites.net/todoitems");
+
+        ToDoItem todoItemPost = new ToDoItem
+            {
+                message = message,
+                name = name,
+                created = DateTime.Now
+            };
+        string myContent = JsonSerializer.Serialize(todoItemPost);
+        byte[] buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+        ByteArrayContent byteContent = new ByteArrayContent(buffer);
+        byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+        await httpClient.PostAsync(url, byteContent);
+
+        jsonData = await httpClient.GetStringAsync(url);
+
         todoList = JsonSerializer.Deserialize<List<ToDoItem>>(jsonData);
+        name = null;
+        message = null;
         StateHasChanged();
     }
 
