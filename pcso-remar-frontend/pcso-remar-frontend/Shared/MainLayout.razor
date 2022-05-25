@@ -1,8 +1,8 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider/>
-<MudDialogProvider/>
-<MudSnackbarProvider/>
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
 <MudLayout>
     <MudAppBar>
@@ -10,11 +10,14 @@
         My Application
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen">
-        <NavMenu/>
+        <NavMenu />
     </MudDrawer>
-    <MudMainContent>
+    @*<MudMainContent Style="margin:20px;">
+    @Body
+    </MudMainContent>*@
+    <MudContainer MaxWidth="MaxWidth.Large" Class="my-2 pt-4">
         @Body
-    </MudMainContent>
+    </MudContainer>
 </MudLayout>
 @code {
     bool _drawerOpen = true;
