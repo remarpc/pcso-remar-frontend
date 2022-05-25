@@ -8,11 +8,7 @@
 <small>Here we will consume the new API</small>
 
 
-@if (todoList == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
+@if (todoList != null)
 {
     <table class="table">
         <thead>
@@ -65,11 +61,18 @@ else
     private string name;
     private string message;
 
+    protected async override Task OnInitializedAsync()
+    {
+        await GetListAsync();
+        base.OnInitializedAsync();
+    }
+
     private async void DeleteAll()
     {
         HttpClient httpClient = new HttpClient();
         await httpClient.DeleteAsync(url);
         await GetListAsync();
+        StateHasChanged();
     }
 
 
@@ -92,6 +95,7 @@ else
         await httpClient.PostAsync(url, byteContent);
 
         await GetListAsync();
+        StateHasChanged();
     }
 
     private async Task GetListAsync()
@@ -103,7 +107,6 @@ else
         todoList = JsonSerializer.Deserialize<List<ToDoItem>>(jsonData);
         name = null;
         message = null;
-        StateHasChanged();
     }
 
     private async void InvokeJavaScript()

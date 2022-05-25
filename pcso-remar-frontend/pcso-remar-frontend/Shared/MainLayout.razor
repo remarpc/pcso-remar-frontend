@@ -12,12 +12,11 @@
     <MudDrawer @bind-Open="@_drawerOpen">
         <NavMenu />
     </MudDrawer>
-    @*<MudMainContent Style="margin:20px;">
-    @Body
-    </MudMainContent>*@
-    <MudContainer MaxWidth="MaxWidth.Large" Class="my-2 pt-4">
-        @Body
-    </MudContainer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-2 pt-4">
+            @Body
+        </MudContainer>
+    </MudMainContent>
 </MudLayout>
 @code {
     bool _drawerOpen = true;
