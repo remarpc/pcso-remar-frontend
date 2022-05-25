@@ -7,8 +7,7 @@
 <h1>Welcome to ToDo Page</h1>
 <small>Here we will consume the new API</small>
 
-@*<h4>Counter: @count</h4>*@
-@*<h4>@jsonData</h4>*@
+
 @if (todoList == null)
 {
     <p><em>Loading...</em></p>
@@ -26,26 +25,25 @@ else
         <tbody>
             @foreach (var todo in todoList)
             {
-                count++;
                 <tr>
                     <td>@todo.name</td>
                     <td>@todo.message</td>
                     <td>@todo.created</td>
                 </tr>
             }
-
         </tbody>
     </table>
 }
 
 <input @bind="name" placeholder="type name" required />
 <input @bind="message" placeholder="type message" required />
-<br>
-<br>
-
+<br><br>
 <button class="btn btn-primary" @onclick="AddToDo">Add To Do</button>
 <button class="btn btn-primary" @onclick="InvokeJavaScript">Invoke JavaScript</button>
 <button class="btn btn-primary" @onclick="DeleteAll">Delete All</button>
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary">Primary</MudButton>
+
 
 @code {
     private int count = 0;

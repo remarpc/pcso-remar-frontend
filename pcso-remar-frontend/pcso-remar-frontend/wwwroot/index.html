@@ -13,6 +13,9 @@
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
     <script>
         window.HelloAlert = async () => {
             alert("Hello! I am alert box!");
@@ -23,14 +26,9 @@
                 caches.keys().then(function (cacheNames) {
                     cacheNames.forEach(function (cacheName) {
                         caches.delete(cacheName);
-
-
-
                     });
                 });
             }
-
-
 
             self.addEventListener('activate', function (event) {
                 event.waitUntil(
@@ -40,9 +38,6 @@
                                 // Return true if you want to remove this cache,
                                 // but remember that caches are shared across
                                 // the whole origin
-
-
-
                                 return true;
                             }).map(function (cacheName) {
                                 return caches.delete(cacheName);
@@ -67,6 +62,7 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 </body>
 
 </html>
